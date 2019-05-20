@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.nfccardemulation">
+          xmlns:tools="http://schemas.android.com/tools" package="com.example.nfccardemulation">
 
     <uses-permission android:name="android.permission.NFC"/>
-    <uses-feature android:name="android.hardware.nfc.core" android:required="true"/>
+    <uses-feature android:name="android.hardware.nfc.hce" android:required="true"/>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
 
     <application

@@ -32,26 +32,27 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if ((requestCode == REQUEST_SCAN || requestCode == REQUEST_AUTOTEST) && data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
-            tvCardDetail.visibility = View.VISIBLE
-            var resultDisplayStr: String
+            number.visibility = View.VISIBLE
+            expirationDate.visibility = View.VISIBLE
+            cvv.visibility = View.VISIBLE
             if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                 val scanResult = data.getParcelableExtra<CreditCard>(CardIOActivity.EXTRA_SCAN_RESULT)
                 // Never log a raw card number. Avoid displaying it, but if necessary use scanResult.formattedCardNumber can intend of .redactedCardNumber
-                resultDisplayStr = "Card Number: " + scanResult.formattedCardNumber + "\n"
+                number.text = "Card Number: " + scanResult.formattedCardNumber
                 if (scanResult.isExpiryValid) {
-                    resultDisplayStr += "Expiration Date: " + scanResult.expiryMonth + "/" + scanResult.expiryYear + "\n"
+                    expirationDate.text = "Expiration Date: " + scanResult.expiryMonth + "/" + scanResult.expiryYear
                 }
                 if (scanResult.cvv != null) {
                     // Never log or display a CVV
-                    resultDisplayStr += "CVV has " + scanResult.cvv.length + " digits.\n"
-                }
-                if (scanResult.postalCode != null) {
-                    resultDisplayStr += "Postal Code: " + scanResult.postalCode + "\n"
+                    cvv.text = "CVV has " + scanResult.cvv.length + " digits"
                 }
             } else {
-                resultDisplayStr = "Scan was canceled."
+                number.visibility = View.GONE
+                expirationDate.visibility = View.GONE
+                cvv.visibility = View.GONE
+                resultDisplayStr.visibility = View.VISIBLE
+                resultDisplayStr.text = "Scan was canceled."
             }
-            tvCardDetail.text = resultDisplayStr
         }
     }
 }
