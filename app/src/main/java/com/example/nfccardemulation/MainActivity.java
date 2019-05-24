@@ -3,7 +3,6 @@ package com.example.nfccardemulation;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,19 +23,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CardIOActivity.class)
-                        .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true)
-                        .putExtra(CardIOActivity.EXTRA_SCAN_EXPIRY, true)
-                        .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true)
-                        .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, true)
-                        .putExtra(CardIOActivity.EXTRA_LANGUAGE_OR_LOCALE, "en")
-                        .putExtra(CardIOActivity.EXTRA_GUIDE_COLOR, Color.GREEN)
-                        .putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true);
-                startActivityForResult(intent, REQUEST_SCAN);
-            }
+        btnScan.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CardIOActivity.class)
+                    .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true)
+                    .putExtra(CardIOActivity.EXTRA_SCAN_EXPIRY, true)
+                    .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true)
+                    .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, true)
+                    .putExtra(CardIOActivity.EXTRA_LANGUAGE_OR_LOCALE, "en")
+                    .putExtra(CardIOActivity.EXTRA_GUIDE_COLOR, Color.GREEN)
+                    .putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true);
+            startActivityForResult(intent, REQUEST_SCAN);
         });
     }
 
