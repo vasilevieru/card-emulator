@@ -1,11 +1,12 @@
 package com.example.nfccardemulation.entities;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "costs", primaryKeys = {"shopId", "cardId"},
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "costs",
         foreignKeys = {
                 @ForeignKey(entity = Shop.class,
                         parentColumns = "id",
@@ -15,7 +16,7 @@ import android.arch.persistence.room.PrimaryKey;
                         childColumns = "card_id")
         })
 public class Cost {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     public double price;
     @ColumnInfo(name = "shop_id")
@@ -23,4 +24,35 @@ public class Cost {
     @ColumnInfo(name = "card_id")
     public int cardId;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public int getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
+    }
 }

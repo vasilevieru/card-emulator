@@ -1,12 +1,37 @@
 package com.example.nfccardemulation.entities;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "shops")
 public class Shop {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     public String name;
     public int category;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
 }
