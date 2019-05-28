@@ -1,4 +1,4 @@
-//package com.example.nfccardemulation;
+package com.example.nfccardemulation;
 //
 //
 //import android.nfc.cardemulation.HostApduService;

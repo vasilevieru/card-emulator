@@ -14,4 +14,5 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="bar_title_txt_selected_color">#eaa</color>
 </resources>

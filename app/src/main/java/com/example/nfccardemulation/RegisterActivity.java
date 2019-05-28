@@ -3,7 +3,6 @@ package com.example.nfccardemulation;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,16 +10,38 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.nfccardemulation.entities.User;
+import org.json.JSONObject;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private String BASE_URL = "http://172.16.2.232:5896/api/users/";
     private static final String TAG = "SignupActivity";
 
-    @BindView(R.id.input_name) EditText _nameText;
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_signup) Button _signupButton;
-    @BindView(R.id.link_login) TextView _loginLink;
+    @BindView(R.id.input_name)
+    EditText _nameText;
+    @BindView(R.id.input_email)
+    EditText _emailText;
+    @BindView(R.id.input_password)
+    EditText _passwordText;
+    @BindView(R.id.btn_signup)
+    Button _signupButton;
+    @BindView(R.id.link_login)
+    TextView _loginLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
+        sendWorkPostRequest();
+        Log.d("s", "s");
 
-        new android.os.Handler().postDelayed(
-                () -> {
-                    // On complete call either onSignupSuccess or onSignupFailed
-                    // depending on success
-                    onSignupSuccess();
-                    // onSignupFailed();
-                    progressDialog.dismiss();
-                }, 3000);
     }
 
 
@@ -136,4 +151,28 @@ public class RegisterActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    private void sendWorkPostRequest() {
+        String urlString = "http:172.16.2.232:5896/api/users/1";
+
+        URL url = null;
+        try {
+            url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Name", _nameText.getText().toString());
+            connection.setRequestProperty("Email", _emailText.getText().toString());
+            connection.setRequestProperty("Password", _passwordText.getText().toString());
+            connection.setDoOutput(true);
+
+            OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
+            outputStream.flush();
+            outputStream.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

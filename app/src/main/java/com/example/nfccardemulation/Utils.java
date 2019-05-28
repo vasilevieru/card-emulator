@@ -1,6 +1,6 @@
-//package com.example.nfccardemulation
-//
-//class Utils {
+package com.example.nfccardemulation;
+//;
+class Utils {
 //    companion object {
 //        private val HEX_CHARS = "0123456789ABCDEF"
 //        fun hexStringToByteArray(data: String) : ByteArray {
@@ -33,4 +33,4 @@
 //            return result.toString()
 //        }
 //    }
-//}
+}
