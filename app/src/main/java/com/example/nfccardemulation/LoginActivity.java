@@ -2,6 +2,7 @@ package com.example.nfccardemulation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.example.nfccardemulation.database.AppDatabase;
+import com.example.nfccardemulation.entities.User;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -18,12 +21,16 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
+
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        
+
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
         _loginButton.setOnClickListener(v -> login());
 
         _signupLink.setOnClickListener(v -> {
@@ -32,36 +39,52 @@ public class LoginActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_SIGNUP);
         });
 
-//        final AppDatabase database = AppDatabase.getAppDatabse(this);
-//        final EditText username = findViewById(R.id.username);
-//        final EditText password = findViewById(R.id.password);
-//        final Button login = findViewById(R.id.login);
-//        final Button register = findViewById(R.id.register);
-//        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final AppDatabase database = AppDatabase.getAppDatabse(this);
+        final EditText username = findViewById(R.id.input_email);
+        final EditText password = findViewById(R.id.input_password);
+        final Button login = findViewById(R.id.btn_login);
+        final TextView register = findViewById(R.id.link_signup);
 
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                User user = database.userDao().selectUser(username.getText().toString());
-//
-//
-//                if (user != null) {
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                    Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        login.setOnClickListener(v -> {
+            final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Authenticating...");
+            progressDialog.show();
+
+            if (!validate()) {
+                onLoginFailed();
+                progressDialog.dismiss();
+                return;
+            }
+
+            _loginButton.setEnabled(false);
+
+            User user = database.userDao().selectUser(username.getText().toString());
+
+
+            if (user != null && user.getEmail().equals(_emailText.getText().toString()) && user.getPassword().equals(_passwordText.getText().toString())) {
+                sp.edit().putBoolean("logged",true).apply();
+                sp.edit().putString("username", user.getName());
+                sp.edit().putInt("userId", user.getId());
+                Intent intent = new Intent(LoginActivity.this, GeneralActivity.class);
+                startActivity(intent);
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 
     @Override

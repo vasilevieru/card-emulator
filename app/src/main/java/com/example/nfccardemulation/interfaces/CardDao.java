@@ -14,7 +14,7 @@ public interface CardDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCars(Card... card);
 
-    @Query("select * from cards")
-    List<Card> getAllCards();
+    @Query("select * from cards where user_id = :id")
+    List<Card> getAllCards(int id);
 
 }

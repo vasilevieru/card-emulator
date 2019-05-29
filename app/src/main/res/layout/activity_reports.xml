@@ -7,68 +7,70 @@
         android:layout_height="match_parent"
         tools:context=".ReportsActivity">
 
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-    <!--android:id="@+id/recyclerView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scrollbars="vertical">-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
 
-    <!--</androidx.recyclerview.widget.RecyclerView>-->
+            <!--  Name Label -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    <!--<androidx.core.widget.NestedScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
+                <com.hadiidbouk.charts.ChartProgressBar
+                        android:id="@+id/ChartProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        app:hdBarCanBeClick="true"
+                        app:hdBarHeight="170dp"
+                        app:hdBarWidth="7dp"
+                        app:hdBarRadius="10dp"
+                        app:hdMaxValue="400"
+                        app:hdEmptyColor="@color/empty"
+                        app:hdProgressColor="@color/progress"
+                        app:hdProgressClickColor="@color/progress_click"
+                        app:hdPinBackgroundColor="@color/pin_background"
+                        app:hdPinTextColor="@color/pin_text"
+                        app:hdPinPaddingBottom="5dp"
+                        app:hdBarTitleColor="@color/bar_title_color"
+                        app:hdBarTitleTxtSize="12sp"
+                        app:hdPinTxtSize="17sp"
+                        app:hdPinMarginTop="5dp"
+                        app:hdPinMarginBottom="55dp"
+                        app:hdBarTitleMarginTop="5dp"
+                        app:hdPinDrawable="@drawable/ic_pin"
+                        app:hdProgressDisableColor="@color/progress_disable"
+                        app:hdBarTitleSelectedColor="@color/bar_title_txt_selected_color"
+                        tools:layout_editor_absoluteY="16dp"
+                        tools:layout_editor_absoluteX="30dp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Email Label -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                <org.eazegraph.lib.charts.PieChart
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/piechart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:padding="8dp"
+                        app:egLegendTextSize="18sp"
+                        app:egUsePieRotation="true"
+                        app:egValueTextSize="36sp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <com.hadiidbouk.charts.ChartProgressBar
-            android:id="@+id/ChartProgressBar"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            app:hdBarCanBeClick="true"
-            app:hdBarHeight="170dp"
-            app:hdBarWidth="7dp"
-            app:hdBarRadius="10dp"
-            app:hdMaxValue="10"
-            app:hdEmptyColor="@color/empty"
-            app:hdProgressColor="@color/progress"
-            app:hdProgressClickColor="@color/progress_click"
-            app:hdPinBackgroundColor="@color/pin_background"
-            app:hdPinTextColor="@color/pin_text"
-            app:hdPinPaddingBottom="5dp"
-            app:hdBarTitleColor="@color/bar_title_color"
-            app:hdBarTitleTxtSize="12sp"
-            app:hdPinTxtSize="17sp"
-            app:hdPinMarginTop="10dp"
-            app:hdPinMarginBottom="55dp"
-            app:hdPinMarginEnd="22dp"
-            app:hdBarTitleMarginTop="9dp"
-            app:hdPinDrawable="@drawable/ic_pin"
-            app:hdProgressDisableColor="@color/progress_disable"
-            app:hdBarTitleSelectedColor="@color/bar_title_txt_selected_color" tools:layout_editor_absoluteY="16dp"
-            tools:layout_editor_absoluteX="30dp"/>
-
-    <com.lalongooo.Rings
-            android:id="@+id/rings"
-            android:layout_width="282dp"
-            android:layout_height="282dp"
-            app:rings_inner_first_color="#FF9F1C"
-            app:rings_inner_first_progress="30"
-            app:rings_inner_first_text="Java"
-            app:rings_inner_second_color="#4BC6B9"
-            app:rings_inner_second_progress="75"
-            app:rings_inner_second_text="Kotlin"
-            app:rings_inner_third_color="#757780"
-            app:rings_inner_third_progress="85"
-            app:rings_inner_third_text="Android"
-            app:rings_overall_color="#EA3546"
-            app:rings_overall_progress="100"
-            app:rings_overall_text="Overall"
-            app:rings_text_size="20sp"
-            app:rings_unfinished_color="#f2f2f2" tools:layout_editor_absoluteY="377dp"
-            tools:layout_editor_absoluteX="64dp"/>
-
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     <!--</androidx.core.widget.NestedScrollView>-->

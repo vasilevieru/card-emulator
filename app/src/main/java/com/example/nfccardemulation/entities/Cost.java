@@ -1,10 +1,9 @@
 package com.example.nfccardemulation.entities;
 
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
+
+import java.util.Date;
 
 @Entity(tableName = "costs",
         foreignKeys = {
@@ -18,11 +17,22 @@ import androidx.room.PrimaryKey;
 public class Cost {
     @PrimaryKey(autoGenerate = true)
     public int id;
-    public double price;
+    public float price;
     @ColumnInfo(name = "shop_id")
     public int shopId;
+
+    public Date date;
+
     @ColumnInfo(name = "card_id")
     public int cardId;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -32,11 +42,11 @@ public class Cost {
         this.id = id;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

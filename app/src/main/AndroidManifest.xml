@@ -20,6 +20,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".CardListActivity">
+        </activity>
         <activity android:name=".NotificationActivity">
         </activity>
         <activity android:name=".ReportsActivity">
@@ -28,16 +30,16 @@
                 android:name=".GeneralActivity"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".LoginActivity"
                 android:label="@string/title_activity_login"
                 android:theme="@style/AppTheme.Dark">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".RegisterActivity"

@@ -9,7 +9,7 @@ public class Shop {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public String name;
-    public int category;
+    public String category;
 
     public int getId() {
         return id;
@@ -27,11 +27,11 @@ public class Shop {
         this.name = name;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

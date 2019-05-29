@@ -1,8 +1,10 @@
 package com.example.nfccardemulation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
+import com.example.nfccardemulation.database.AppDatabase;
 import com.example.nfccardemulation.entities.Card;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import io.card.payment.CardIOActivity;
@@ -29,6 +32,7 @@ public class GeneralActivity extends AppCompatActivity {
     int REQUEST_SCAN = 101;
     int REQUEST_AUTOTEST = 200;
     private Button btnScan;
+    SharedPreferences preferences;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,6 +52,11 @@ public class GeneralActivity extends AppCompatActivity {
 //                    fm.beginTransaction().hide(active).show(reportFragment).commit();
 //                    active = reportFragment;
                     break;
+
+                case R.id.navigation_cards:
+                    Intent c = new Intent(GeneralActivity.this, CardListActivity.class);
+                    startActivity(c);
+                    break;
                 case R.id.navigation_notifications:
                     Intent b = new Intent(GeneralActivity.this, ReportsActivity.class);
                     startActivity(b);
@@ -63,9 +72,12 @@ public class GeneralActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         btnScan = findViewById(R.id.btnScan);
 //        fm.beginTransaction().add(R.id.main_container, notificationFragment, "3").hide(notificationFragment).commit();
 //        fm.beginTransaction().add(R.id.main_container, reportFragment, "2").hide(reportFragment).commit();
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //        fm.beginTransaction().add(R.id.main_container, scanCardFragment, "1").commit();
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +94,6 @@ public class GeneralActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
@@ -91,17 +101,17 @@ public class GeneralActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if ((requestCode == REQUEST_SCAN || requestCode == REQUEST_AUTOTEST) && data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
             if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
-//                AppDatabase database = AppDatabase.getAppDatabse(this);
+                AppDatabase database = AppDatabase.getAppDatabse(this);
                 CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
                 Card card = new Card();
                 card.setNumber(scanResult.cardNumber);
                 card.setCvv(scanResult.cvv);
-                card.setExpiration(22);
-                card.setUserId(1);
-//                database.cardDao().insertCars(card);
-                Toast.makeText(GeneralActivity.this, "Saved Successfully", Toast.LENGTH_LONG);
+                card.setExpiration(scanResult.expiryYear);
+                card.setUserId(preferences.getInt("userId", 1));
+                database.cardDao().insertCars(card);
+                Toast.makeText(GeneralActivity.this, "Saved Successfully", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Save failed", Toast.LENGTH_LONG);
+                Toast.makeText(this, "Save failed", Toast.LENGTH_LONG).show();
             }
         }
     }
